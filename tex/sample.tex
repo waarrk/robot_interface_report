@@ -1,0 +1,474 @@
+\documentclass[dvipdfmx,titlepage,a4j]{jsarticle}
+
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{listings,jvlisting}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage[yen]{okuverb}
+\usepackage{ascmac}
+\usepackage{fancybox}
+\usepackage{fancyvrb}
+\usepackage{fancyhdr}
+\usepackage[table]{xcolor}
+\usepackage{lastpage}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{here}
+\usepackage{textcomp}
+
+\fancypagestyle{foot}
+{
+\fancyhead[C]{}
+\fancyfoot[C]{\thepage / \pageref{LastPage}}
+\renewcommand\headrulewidth{0.4pt}
+}
+
+\definecolor{lightblue}{RGB}{220,230,255}
+\definecolor{lightpink}{RGB}{255,230,210}
+
+%ここからソースコードの表示に関する設定
+\lstset{
+  language={C++},
+  basicstyle={\ttfamily},
+  identifierstyle={\small},
+  commentstyle={\smallitshape},
+  keywordstyle={\small\bfseries},
+  ndkeywordstyle={\small},
+  stringstyle={\small\ttfamily},
+  frame={tb},
+  tabsize={2},
+  breaklines=true,
+  columns=[l]{fullflexible},
+  numbers=left,
+  xrightmargin=0zw,
+  xleftmargin=3zw,
+  numberstyle={\scriptsize},
+  stepnumber=1,
+  numbersep=1zw,
+  lineskip=-0.5ex
+}
+
+\title{タイトル}
+\author{waarrk}
+\date{2023年2月1日}
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+
+    \vspace{1cm}
+
+    {\LARGE \textbf{ロボットインターフェース設計論 課題}}
+
+    \vspace{0.5cm}
+
+    {2024年度開講 ロボットインターフェース設計論レポート}
+
+    \vspace{1.5cm}
+
+    {\textbf{千葉工業大学 先進工学部 未来ロボティクス学科}\\}
+    {\textbf{22C1704 鷲尾 優作}}
+
+    \vfill
+
+    {\large 2024年12月10日}
+
+    \vspace{1cm}
+\end{titlepage}
+
+\paragraph{ 問題 1\\}
+素数 7 で割った余り[0,1,2,3,4,5,6]を元とし、次の演算が定義されているガロア体 GF(7)について、(1)~(6)の式の値を求めよ。
+
+\begin{minipage}{0.45\hsize} \centering
+\[
+\begin{array}{c|ccccccc}
++ & 0 & 1 & 2 & 3 & 4 & 5 & 6 \\ \hline
+0 & 0 & 1 & 2 & 3 & 4 & 5 & 6 \\
+1 & 1 & 2 & 3 & 4 & 5 & 6 & 0 \\
+2 & 2 & 3 & 4 & 5 & 6 & 0 & 1 \\
+3 & 3 & 4 & 5 & 6 & 0 & 1 & 2 \\
+4 & 4 & 5 & 6 & 0 & 1 & 2 & 3 \\
+5 & 5 & 6 & 0 & 1 & 2 & 3 & 4 \\
+6 & 6 & 0 & 1 & 2 & 3 & 4 & 5 \\
+\end{array}
+\]
+\end{minipage} \begin{minipage}{0.45\hsize} \centering
+\[
+\begin{array}{c|ccccccc}
+\times & 0 & 1 & 2 & 3 & 4 & 5 & 6 \\ \hline
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+1 & 0 & 1 & 2 & 3 & 4 & 5 & 6 \\
+2 & 0 & 2 & 4 & 6 & 1 & 3 & 5 \\
+3 & 0 & 3 & 6 & 2 & 5 & 1 & 4 \\
+4 & 0 & 4 & 1 & 5 & 2 & 6 & 3 \\
+5 & 0 & 5 & 3 & 1 & 6 & 4 & 2 \\
+6 & 0 & 6 & 5 & 4 & 3 & 2 & 1 \\
+\end{array}
+\]
+\end{minipage}
+\\
+
+求めるべき式は以下である。
+
+\[
+(1)\;2 + 4, \quad 
+(2)\;5 - 2, \quad 
+(3)\;2 - 5, \quad 
+(4)\;4 \times 3, \quad 
+(4)\;4 \div 3, \quad 
+(6)\;1 \div 6.
+\]
+
+\paragraph{ 回答 1\\}
+7で割った余りを元とする演算であるから、以下のように計算できる。
+
+\[
+\begin{aligned}
+(1)\;2 + 4 &\equiv 6 \pmod{7}\\[6pt]
+(2)\;5 - 2 &= 5 + (-2) = 5 + 5 \equiv 10 \equiv 3 \pmod{7}\\[6pt]
+(3)\;2 - 5 &= 2 + (-5) = 2 + 2 \equiv 4 \pmod{7}\\[6pt]
+(4)\;4 \times 3 &\equiv 12 \equiv 5 \pmod{7}\\[6pt]
+(5)\;4 \div 3 &= 4 \times 3^{-1} = 4 \times 5 \equiv 20 \equiv 6 \pmod{7}\\[6pt]
+(6)\;1 \div 6 &= 1 \times 6^{-1} = 1 \times 6 \equiv 6 \pmod{7}
+\end{aligned}
+\]
+
+
+\paragraph{ 問題 2\\}
+下図のように7文字からなる文字列の各文字の7ビットの
+ASCIIコード(表1)に偶数パリティで計算された垂直水平パリティが付与された64ビットの
+符号語が送信され,式(1)の符号語を受信した.
+1ビットまでの誤りがあることを考慮して送信された7文字の正しい“文字列”を復号せよ.
+
+\begin{center}
+    \small
+    \setlength{\tabcolsep}{12pt}
+    \renewcommand{\arraystretch}{1.2}
+
+\begin{tabular}{
+    c
+    | c c c c c c c 
+    >{\columncolor{lightpink}}c
+}
+ & b$_1$ & b$_2$ & b$_3$ & b$_4$ & b$_5$ & b$_6$ & b$_7$ & b$_8$ \\ \hline
+W$_1$ & x$_{11}$ & x$_{12}$ & x$_{13}$ & x$_{14}$ & x$_{15}$ & x$_{16}$ & x$_{17}$ & x$_{18}$ \\
+W$_2$ & x$_{21}$ & x$_{22}$ & x$_{23}$ & x$_{24}$ & x$_{25}$ & x$_{26}$ & x$_{27}$ & x$_{28}$ \\
+W$_3$ & x$_{31}$ & x$_{32}$ & x$_{33}$ & x$_{34}$ & x$_{35}$ & x$_{36}$ & x$_{37}$ & x$_{38}$ \\
+W$_4$ & x$_{41}$ & x$_{42}$ & x$_{43}$ & x$_{44}$ & x$_{45}$ & x$_{46}$ & x$_{47}$ & x$_{48}$ \\
+W$_5$ & x$_{51}$ & x$_{52}$ & x$_{53}$ & x$_{54}$ & x$_{55}$ & x$_{56}$ & x$_{57}$ & x$_{58}$ \\
+W$_6$ & x$_{61}$ & x$_{62}$ & x$_{63}$ & x$_{64}$ & x$_{65}$ & x$_{66}$ & x$_{67}$ & x$_{68}$ \\
+W$_7$ & x$_{71}$ & x$_{72}$ & x$_{73}$ & x$_{74}$ & x$_{75}$ & x$_{76}$ & x$_{77}$ & x$_{78}$ \\
+\rowcolor{lightblue} 
+W$_8$ & x$_{81}$ & x$_{82}$ & x$_{83}$ & x$_{84}$ & x$_{85}$ & x$_{86}$ & x$_{87}$ & x$_{88}$ \\
+\end{tabular}
+
+\end{center}
+\vspace{1em}
+
+\[
+\text{受信語 }(W_1 W_2 W_3 W_4 W_5 W_6 W_7 W_8) =
+\begin{aligned}
+\\
+(x_{11}x_{12}x_{13}x_{14}x_{15}x_{16}x_{17}x_{18}\,
+x_{21}x_{22}x_{23}x_{24}x_{25}x_{26}x_{27}x_{28}\,\\
+x_{31}x_{32}x_{33}x_{34}x_{35}x_{36}x_{37}x_{38}\,
+x_{41}x_{42}x_{43}x_{44}x_{45}x_{46}x_{47}x_{48}\, \\
+x_{51}x_{52}x_{53}x_{54}x_{55}x_{56}x_{57}x_{58}\,
+x_{61}x_{62}x_{63}x_{64}x_{65}x_{66}x_{67}x_{68}\,\\
+x_{71}x_{72}x_{73}x_{74}x_{75}x_{76}x_{77}x_{78}\,
+x_{81}x_{82}x_{83}x_{84}x_{85}x_{86}x_{87}x_{88})\\
+\end{aligned}
+\]
+\[
+= 10101100\,11000011\,11110100\,11010010\,11011110\,11101011\,11100111\,10001010 \cdots (1)
+\]
+
+\begin{table}[h]
+    \centering
+    \caption{ASCIIコード}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+        \hline
+         & \_0 & \_1 & \_2 & \_3 & \_4 & \_5 & \_6 & \_7 & \_8 & \_9 & \_A & \_B & \_C & \_D & \_E & \_F \\ \hline
+        2\_ &   & ! & " & \# & \$ & \% & \& & ' & ( & ) & * & + & , & - & . & / \\ \hline
+        3\_ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & : & ; & \textless & = & \textgreater & ? \\ \hline
+        4\_ & @ & A & B & C & D & E & F & G & H & I & J & K & L & M & N & O \\ \hline
+        5\_ & P & Q & R & S & T & U & V & W & X & Y & Z & \textbackslash & \^{} & \_ & \{ & \} \\ \hline
+        6\_ & ` & a & b & c & d & e & f & g & h & i & j & k & l & m & n & o \\ \hline
+        7\_ & p & q & r & s & t & u & v & w & x & y & z & \{ & \textbar & \} & \textasciitilde & DEL \\ \hline
+    \end{tabular}
+
+    
+    \vspace{1em}
+    {\small ※ たとえば ‘A’のASCIIコードは，上記表から16進数で0x41，2進数(100 0001)}
+    
+    \end{table}
+
+\paragraph{ 回答 2\\}
+訂正後の7行7ビット（W1～W7, b1～b7）のビット列を示す。
+\[
+\begin{aligned}
+&\quad W_1: 1\,0\,1\,0\,1\,1\,0 \quad(2)\\
+&\quad W_2: 1\,1\,0\,0\,0\,0\,1 \quad(2)\\
+&\quad W_3: 1\,1\,1\,0\,0\,1\,0 \quad(2)\\
+&\quad W_4: 1\,1\,0\,1\,0\,0\,1 \quad(2)\\
+&\quad W_5: 1\,1\,0\,1\,1\,1\,1 \quad(2)\\
+&\quad W_6: 1\,1\,1\,0\,1\,0\,1 \quad(2)\\
+&\quad W_7: 1\,1\,1\,0\,0\,1\,1 \quad(2)\\[6pt]
+\end{aligned}
+\]
+したがって、割り当てられるASCIIコードは以下の通りである。
+\[
+\begin{aligned}
+&\quad W_1: 1010110_2 = 0x56_{16} = \rightarrow\text{'V'}\\
+&\quad W_2: 1100001_2 = 0x61_{16} = \rightarrow\text{'a'}\\
+&\quad W_3: 1110010_2 = 0x72_{16} = \rightarrow\text{'r'}\\
+&\quad W_4: 1101001_2 = 0x69_{16} = \rightarrow\text{'i'}\\
+&\quad W_5: 1101111_2 = 0x6F_{16} = \rightarrow\text{'o'}\\
+&\quad W_6: 1110101_2 = 0x75_{16} = \rightarrow\text{'u'}\\
+&\quad W_7: 1110011_2 = 0x73_{16} = \rightarrow\text{'s'}\\[6pt]
+&\text{よって、誤り訂正後の文字列は：}\\
+&\boxed{\text{Various}}
+\end{aligned}
+\]
+
+\paragraph{ 問題 3\\}
+下記の生成行列$G$・検査行列$H$が与えられた時に、情報語長4ビットの情報(1 1 1 0)を7ビット長のハミング符号で符号化した符号語を求めよ。
+
+\[
+H = \begin{bmatrix}
+0 & 1 & 1 & 1 & 1 & 0 & 0 \\
+1 & 0 & 1 & 1 & 0 & 1 & 0 \\
+1 & 1 & 0 & 1 & 0 & 0 & 1
+\end{bmatrix}
+\qquad
+G = \begin{bmatrix}
+1 & 0 & 0 & 0 & 0 & 1 & 1 \\
+0 & 1 & 0 & 0 & 1 & 0 & 1 \\
+0 & 0 & 1 & 0 & 1 & 1 & 0 \\
+0 & 0 & 0 & 1 & 1 & 1 & 1
+\end{bmatrix}
+\]
+
+※情報$i=(x1,x2,x3,x4)$が与えられた時のハミング符号$w=(x1,x2,x3,x4,c1,c2,c3)$の求め方(※足し算は排他的論理和を適用)
+
+$w=iG$
+
+ハミング符号$w$が与えられた時の、検査の仕方は、$e=Hw^T$を計算し、$e = 0$の時は、誤りなし、$e \neq 0$の時は、$e$と一致する$H$の列の列番号が
+誤っているビットの位置を示す。
+
+\paragraph{ 回答 3\\}
+\[
+\begin{aligned}
+&\textbf{情報語：} i = (1,\,1,\,1,\,0) \\[6pt]
+&\text{まず } i \text{ と } G \text{ の積を2進数排他的論理和として求める}\\[6pt]
+&\text{行列 }G\text{ の各行を }g_1,g_2,g_3,g_4\text{ とすると：}\\
+&g_1 = [1,\,0,\,0,\,0,\,0,\,1,\,1]\\
+&g_2 = [0,\,1,\,0,\,0,\,1,\,0,\,1]\\
+&g_3 = [0,\,0,\,1,\,0,\,1,\,1,\,0]\\
+&g_4 = [0,\,0,\,0,\,1,\,1,\,1,\,1]\\[6pt]
+&\text{情報語 } i=(x_1,x_2,x_3,x_4)=(1,1,1,0) \text{ より、}\\
+&w = x_1g_1 \oplus x_2g_2 \oplus x_3g_3 \oplus x_4g_4 = g_1 \oplus g_2 \oplus g_3\\[6pt]
+&g_1 \oplus g_2 = [1,\,0,\,0,\,0,\,0,\,1,\,1] \oplus [0,\,1,\,0,\,0,\,1,\,0,\,1]\\
+&\quad = [1\oplus0,\ 0\oplus1,\ 0\oplus0,\ 0\oplus0,\ 0\oplus1,\ 1\oplus0,\ 1\oplus1]\\
+&\quad =  (g_1 \oplus g_2) \oplus g_3 = [1,\,1,\,0,\,0,\,1,\,1,\,0] \oplus [0,\,0,\,1,\,0,\,1,\,1,\,0]\\
+&\quad = [1\oplus0,\ 1\oplus0,\ 0\oplus1,\ 0\oplus0,\ 1\oplus1,\ 1\oplus1,\ 0\oplus0]\\
+&\quad = [1,\,1,\,1,\,0,\,0,\,0,\,0]\\[6pt]
+&\text{よって求める符号語は } w = (1,\,1,\,1,\,0,\,0,\,0,\,0) \text{ となる}\\[6pt]
+&\boxed{w = (1,1,1,0,0,0,0)}
+\end{aligned}
+\]
+
+\paragraph{ 問題 4\\}
+生成行列 G ・検査行列 H に問題 3 のものを使い、”あ”~”た”に、0000~1111 までを割り当 て、8文字の情報(文字列)をハミング符号で符号化し送信した。
+あ 0000,い 0001,う 0010,え 0011,お 0100, か 0101,き 0110,く 0111, け 1000,こ 1001,さ 1010,し 1011,す 1100, せ 1101,そ 1110,た 1111
+下記の受信した情報の誤りの有無をしらべ、誤りがあれば誤りのある箇所を特定し、送信さ れた情報(文字列)を復号せよ。
+
+\[
+    \begin{bmatrix}
+        1011111 & 0111010 & 0001111 & 1000000 & 0100001 & 0001101 & 0100010 & 1010100
+\end{bmatrix}
+\]
+
+\paragraph{ 回答 4\\}
+各受信語 $w=(x_1,x_2,x_3,x_4,c_1,c_2,c_3)$ について，$e=H w^T$ を計算し，$e=0$で誤りなし，$e\neq0$で該当する列位置のビットを反転する。
+
+1. $w_1=1011111$  
+   $e=H w_1^T = [1,0,1]^T$ → $H$第2列
+
+   第2ビット(x2)を反転：$1011111 \to 1111111$  
+   データ部：1111 → 「た」
+
+2. $w_2=0111010$  
+   $w_2=(0,1,1,1,0,1,0)$  
+   $e = H w_2^T = [1,1,0]^T$ → $H$第3列
+
+   第3ビット(x3)を反転：$0111010 \to 0101010$  
+   データ部：0101 → 「か」
+
+3. $w_3=0001111$  
+   $e=0$、誤りなし  
+
+   データ部：0001 → 「い」
+
+4. $w_4=1000000$  
+   $e=[0,1,1]^T$ → $H$第1列
+
+   第1ビット(x1)反転：$1000000 \to 0000000$  
+   データ部：0000 → 「あ」
+
+5. $w_5=0100001$  
+   $e=[1,0,0]^T$ → $H$第5列
+
+   第5ビット(c1)反転：$0100001 \to 0100101$  
+   データ部：0100 → 「お」
+
+6. $w_6=0001101$  
+   $e=[0,1,0]^T$ → $H$第6列
+
+   第6ビット(c2)反転：$0001101 \to 0001111$  
+   データ部：0001 → 「い」
+
+7. $w_7=0100010$  
+   $e=[1,1,1]^T$ → $H$第4列
+
+   第4ビット(x4)反転：$0100010 \to 0101010$  
+   データ部：0101 → 「か」
+
+8. $w_8=1010100$  
+   $e=[0,0,1]^T$ → $H$第7列
+
+   第7ビット(c3)反転：$1010100 \to 1010101$  
+   データ部：1010 → 「さ」
+
+よって，復号後の文字列は「たかいあおいかさ」となる。
+
+\[
+\boxed{\text{たかいあおいかさ}}
+\]
+
+\paragraph{ 問題 5\\}
+生成多項式$G(x)=x^4+x^3+x^2+1$が与えられた時に、
+情報(1 0 1)$=x^2 + 1 = P(x)$に対応する7ビットの巡回符号$F(x)$を求めよ。なお、解答は、2 進符号で記述すること。
+
+※$F(x)=x^4P(x)+R(x)$、$R(x)$は$x^4P(x)$を$G(x)$で割った余り。
+
+\paragraph{ 回答 5\\}
+\[
+\begin{aligned}
+&\text{まず } x^4P(x)\text{ を求める:}\\
+&x^4P(x)=x^4(x^2+1)=x^6+x^4 \\[6pt]
+&\text{次に } x^6+x^4 \text{ を } G(x)=x^4+x^3+x^2+1 \text{ で割る。}\\[6pt]
+1.\; &x^6+x^4 \div (x^4+x^3+x^2+1):
+   \\
+   &\text{商: }x^6 ÷ x^4 = x^2 \\
+   &x^2 \cdot G(x) = x^6+x^5+x^4+x^2 \\[6pt]
+   &\text{剰余: }(x^6+x^4) \oplus (x^6+x^5+x^4+x^2) = x^5+x^2 \\[6pt]
+2.\; &x^5+x^2 \div (x^4+x^3+x^2+1):
+   \\
+   &\text{商: }x^5 ÷ x^4 = x \\
+   &x \cdot G(x) = x^5+x^4+x^3+x \\[6pt]
+   &\text{剰余: }(x^5+x^2) \oplus (x^5+x^4+x^3+x) = x^4+x^3+x+x^2 \\[6pt]
+3.\; &(x^4+x^3+x^2+x) \div (x^4+x^3+x^2+1):
+   \\
+   &\text{商: } x^4 ÷ x^4 = 1 \\
+   &1 \cdot G(x) = x^4+x^3+x^2+1 \\[6pt]
+   &\text{剰余: }(x^4+x^3+x^2+x) \oplus (x^4+x^3+x^2+1) = x+1 \\[6pt]
+&\text{よって余り }R(x)=x+1 \\[6pt]
+&\text{よって符号語: } F(x)=x^4P(x)+R(x)= (x^6+x^4)+(x+1)=x^6+x^4+x+1 \\[6pt]
+&F(x)=x^6+x^4+x+1 \text{ を2進列で表すと:}\\
+&x^6:1,\; x^5:0,\; x^4:1,\; x^3:0,\; x^2:0,\; x^1:1,\; x^0:1 \\
+&\boxed{1010011}
+\end{aligned}
+\]
+
+\paragraph{ 問題 6\\}
+生成多項式$G(x)=x^4+x^3+x^2+1$が与えられた時に、(1)~(3)の受信した符号語の剰余
+(余り)を求め、誤りの有無を示せ。なお、誤りの根拠となる「剰余」と「誤りの有無」を明示すること。
+
+(1) (1000101)($=x^6+x^2+1$)
+
+(2) (1101001)($=x^6+x^5+x^3+1$)
+
+(3) (0101110)($=x^5+x^3+x^2+x$)
+
+(1) 受信語：$(1000101)_2 = x^6 + x^2 + 1$
+
+\paragraph{ 回答 6\\}
+\[
+\begin{aligned}
+x^6 + x^2 + 1 &\div (x^4 + x^3 + x^2 + 1) \\
+&\xrightarrow{x^2 \text{で割る}} x^2 (x^4 + x^3 + x^2 + 1) = x^6 + x^5 + x^4 + x^2 \\
+\text{剰余} &= (x^6 + x^2 + 1) \oplus (x^6 + x^5 + x^4 + x^2) = x^5 + x^4 + 1.
+\end{aligned}
+\]
+
+続いて $x^5 + x^4 + 1 \div (x^4 + x^3 + x^2 + 1)$ を行う：
+\[
+\begin{aligned}
+x^5 + x^4 + 1 &\xrightarrow{x \text{で割る}} x (x^4 + x^3 + x^2 + 1) = x^5 + x^4 + x^3 + x \\
+\text{剰余} &= (x^5 + x^4 + 1) \oplus (x^5 + x^4 + x^3 + x) = x^3 + x + 1.
+\end{aligned}
+\]
+
+これ以上次数が低い多項式（$x^3 + x + 1$）なので割れず、剰余は
+\[
+R_1(x) = x^3 + x + 1 \neq 0.
+\]
+よって、(1)は誤り
+
+(2) 受信語：$(1101001)_2 = x^6 + x^5 + x^3 + 1$
+
+\[
+\begin{aligned}
+x^6 + x^5 + x^3 + 1 &\div (x^4 + x^3 + x^2 + 1) \\
+&\xrightarrow{x^2 \text{で割る}} x^2(x^4 + x^3 + x^2 + 1) = x^6 + x^5 + x^4 + x^2 \\
+\text{剰余} &= (x^6 + x^5 + x^3 + 1) \oplus (x^6 + x^5 + x^4 + x^2) = x^4 + x^3 + x^2 + 1.
+\end{aligned}
+\]
+
+ここで、$x^4 + x^3 + x^2 + 1$ は $G(x)$ そのものなので、
+\[
+R_2(x) = 0.
+\]
+よって、(2)は誤りなし
+
+(3) 受信語：$(0101110)_2 = x^5 + x^3 + x^2 + x$
+
+\[
+\begin{aligned}
+x^5 + x^3 + x^2 + x &\div (x^4 + x^3 + x^2 + 1) \\
+&\xrightarrow{x \text{で割る}} x (x^4 + x^3 + x^2 + 1) = x^5 + x^4 + x^3 + x \\
+\text{剰余} &= (x^5 + x^3 + x^2 + x) \oplus (x^5 + x^4 + x^3 + x) = x^4 + x^2.
+\end{aligned}
+\]
+
+さらに $x^4 + x^2 \div G(x)$ を行う：
+\[
+\begin{aligned}
+x^4 + x^2 &\xrightarrow{1 \text{で割る}} (x^4 + x^3 + x^2 + 1) \\
+\text{剰余} &= (x^4 + x^2) \oplus (x^4 + x^3 + x^2 + 1) = x^3 + 1.
+\end{aligned}
+\]
+
+よって、
+\[
+R_3(x) = x^3 + 1 \neq 0.
+\]
+(3)は誤り
+
+\[
+\boxed{
+(1)\ R_1(x)=x^3+x+1 \neq 0 \Rightarrow \text{誤り}\\
+(2)\ R_2(x)=0 \Rightarrow \text{誤りなし}\\
+(3)\ R_3(x)=x^3+1 \neq 0 \Rightarrow \text{誤り}
+}
+\]
+
+\nocite{*}
+\bibliographystyle{jplain}
+\bibliography{refs}
+
+\end{document}
